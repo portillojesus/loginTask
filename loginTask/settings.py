@@ -30,6 +30,9 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+# Se omite el resto del código
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tasks.apps.TasksConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 MIDDLEWARE = [
@@ -48,7 +52,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tasks.middleware.auth.AuthMiddleware',  # Añadido'
 ]
+
 
 ROOT_URLCONF = 'loginTask.urls'
 
@@ -78,8 +84,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'login_task',
-        'USER': 'sample_user',
-        'PASSWORD': 'password',
+        'USER': 'usuario',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -135,3 +141,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/accounts/login'
+LOGIN_REDIRECT_URL = '/tasks'
+LOGOUT_REDIRECT_URL = '/accounts/login'
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+

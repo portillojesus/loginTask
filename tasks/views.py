@@ -2,7 +2,21 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from .models import Task
 from .forms import TaskCreationForm
+from django.contrib.auth.decorators import login_required
 
+@login_required    # Añadido
+def create(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        content = request.POST['content']
+        article = Article(title=title, content=content)
+        article.save()
+        return redirect('blog:index')
+    else:
+        params = {
+            'form': ArticleForm(),
+        }
+        return render(request, 'blog/create.html', params)
 
 def index(request):
     tasks = Task.objects.all()
